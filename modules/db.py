@@ -11,12 +11,18 @@ class DB:
 
     def create_db_connection(self) -> pymysql.connections.Connection:
 
-        return pymysql.connect(host=self._DBServer, 
+        try:
+
+            return pymysql.connect(host=self._DBServer, 
                                      user=self._DBUser, 
                                      password=self._DBPass, 
                                      database=self._DBName,
                                      port=self._DBPort, 
                                      cursorclass=pymysql.cursors.DictCursor)
+        except pymysql.err.OperationalError as e:
+            print(e)
+            exit()
+
         
     def select(self, connection:pymysql.connections.Connection, query:str) -> list:
         
