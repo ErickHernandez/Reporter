@@ -1,4 +1,6 @@
 from modules.csv_handler import write_csv
+from modules.smtp import SMTP
+
 
 class Exporter:
     
@@ -8,5 +10,6 @@ class Exporter:
     def exportToJSON(self, data:list, filename:str):
         pass
 
-    def exportToEmail(self, data:list, emails:list):
-        pass
+    def exportFileToEmail(self, smtp:SMTP, email_receivers:list, subject:str, body:str, filename:str):
+        for email in email_receivers:
+            smtp.sendFileByEmail(subject, body, email, filename)
