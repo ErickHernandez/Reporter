@@ -5,23 +5,26 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-class SMTP:
 
-    def __init__(self, sender_email:str, sender_password:str, smtp_host:str, smtp_port:int):
+class SMTP:
+    def __init__(
+        self, sender_email: str, sender_password: str, smtp_host: str, smtp_port: int
+    ):
         self._sender_email = sender_email
         self._password = sender_password
         self._host = smtp_host
         self._port = smtp_port
 
-    def sendFileByEmail(self, subject:str, body:str, receiver_email:str, attachment_filepath:str):
-
+    def sendFileByEmail(
+        self, subject: str, body: str, receiver_email: str, attachment_filepath: str
+    ):
         message = MIMEMultipart()
         message["From"] = self._sender_email
         message["To"] = receiver_email
         message["Subject"] = subject
         message.attach(MIMEText(body, "plain"))
 
-        filename = attachment_filepath 
+        filename = attachment_filepath
 
         with open(filename, "rb") as attachment:
             # Add file as application/octet-stream
@@ -47,6 +50,6 @@ class SMTP:
             server.login(self._sender_email, self._password)
             server.sendmail(self._sender_email, receiver_email, text)
             server.quit()
-    
-    def validateEmail(self, email):     
+
+    def validateEmail(self, email):
         pass
